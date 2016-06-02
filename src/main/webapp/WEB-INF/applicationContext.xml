@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context" xsi:schemaLocation="   http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd      http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+	<context:annotation-config></context:annotation-config>
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename" value="Messages"></property>
+		<property name="defaultEncoding" value="UTF-8"></property>
+	</bean>
+	<bean class="org.springframework.web.portlet.mvc.annotation.DefaultAnnotationHandlerMapping"></bean>
+	<bean id="templateResolver" class="org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver">
+		<property name="prefix" value="/templates/"></property>
+		<property name="suffix" value=".html"></property>
+		<property name="templateMode" value="HTML5"></property>
+	</bean>
+	<bean id="templateEngine" class="org.thymeleaf.spring4.SpringTemplateEngine">
+		<property name="templateResolver" ref="templateResolver"></property>
+	</bean>
+	<bean class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
+		<property name="templateEngine" ref="templateEngine"></property>
+		<property name="order" value="1"></property>
+	</bean>
+</beans>

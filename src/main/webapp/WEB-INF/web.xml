@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jsp="http://java.sun.com/xml/ns/javaee/jsp" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="model_manager" version="3.0">
+	<display-name>testportlet-0.0.2.A-SNAPSHOT</display-name>
+<!--
+	<context-param>
+		<param-name>parentContextKey</param-name>
+		<param-value>com.vottvoydom.objcore</param-value>
+	</context-param>
+	<context-param>
+		<param-name>disablePortletContextLoading</param-name>
+		<param-value>true</param-value>
+	</context-param>
+	<context-param>
+		<param-name>configuration</param-name>
+		<param-value>deployment</param-value>
+	</context-param>
+-->
+	<context-param>
+		<param-name>portalListenerClasses</param-name>
+		<param-value>com.liferay.portal.kernel.servlet.SerializableSessionAttributeListener,org.springframework.web.context.ContextLoaderListener,com.liferay.portal.kernel.servlet.PluginContextListener</param-value>
+	</context-param>
+	<filter>
+		<filter-name>Invoker Filter - ERROR</filter-name>
+		<filter-class>com.liferay.portal.kernel.servlet.filters.invoker.InvokerFilter</filter-class>
+		<init-param>
+			<param-name>dispatcher</param-name>
+			<param-value>ERROR</param-value>
+		</init-param>
+	</filter>
+	<filter>
+		<filter-name>Invoker Filter - FORWARD</filter-name>
+		<filter-class>com.liferay.portal.kernel.servlet.filters.invoker.InvokerFilter</filter-class>
+		<init-param>
+			<param-name>dispatcher</param-name>
+			<param-value>FORWARD</param-value>
+		</init-param>
+	</filter>
+	<filter>
+		<filter-name>Invoker Filter - INCLUDE</filter-name>
+		<filter-class>com.liferay.portal.kernel.servlet.filters.invoker.InvokerFilter</filter-class>
+		<init-param>
+			<param-name>dispatcher</param-name>
+			<param-value>INCLUDE</param-value>
+		</init-param>
+	</filter>
+	<filter>
+		<filter-name>Invoker Filter - REQUEST</filter-name>
+		<filter-class>com.liferay.portal.kernel.servlet.filters.invoker.InvokerFilter</filter-class>
+		<init-param>
+			<param-name>dispatcher</param-name>
+			<param-value>REQUEST</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>Invoker Filter - ERROR</filter-name>
+		<url-pattern>/*</url-pattern>
+		<dispatcher>ERROR</dispatcher>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>Invoker Filter - FORWARD</filter-name>
+		<url-pattern>/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>Invoker Filter - INCLUDE</filter-name>
+		<url-pattern>/*</url-pattern>
+		<dispatcher>INCLUDE</dispatcher>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>Invoker Filter - REQUEST</filter-name>
+		<url-pattern>/*</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+	</filter-mapping>
+	<listener>
+		<listener-class>com.liferay.portal.kernel.servlet.SecurePluginContextListener</listener-class>
+	</listener>
+	<servlet>
+		<servlet-name>testportlet Servlet</servlet-name>
+		<servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
+		<init-param>
+			<param-name>portlet-class</param-name>
+			<param-value>org.springframework.web.portlet.DispatcherPortlet</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet>
+		<servlet-name>Dynamic Resource Servlet</servlet-name>
+		<servlet-class>com.liferay.portal.kernel.servlet.PortalClassLoaderServlet</servlet-class>
+		<init-param>
+			<param-name>servlet-class</param-name>
+			<param-value>com.liferay.portal.kernel.webserver.DynamicResourceServlet</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet>
+		<servlet-name>thymeleaf</servlet-name>
+		<servlet-class>org.springframework.web.servlet.ViewRendererServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>testportlet Servlet</servlet-name>
+		<url-pattern>/testportlet/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Dynamic Resource Servlet</servlet-name>
+		<url-pattern>/sprite/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>thymeleaf</servlet-name>
+		<url-pattern>/templates/</url-pattern>
+	</servlet-mapping>
+</web-app>

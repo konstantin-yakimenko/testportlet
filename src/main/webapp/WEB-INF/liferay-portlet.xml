@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!DOCTYPE liferay-portlet-app PUBLIC "-//Liferay//DTD Portlet Application 7.0.0//EN" "http://www.liferay.com/dtd/liferay-portlet-app_7_0_0.dtd">
+
+<liferay-portlet-app>
+	<portlet>
+		<portlet-name>testportlet</portlet-name>
+		<icon>/icon.png</icon>
+		<action-url-redirect>true</action-url-redirect>
+		<instanceable>false</instanceable>
+		<user-principal-strategy>screenName</user-principal-strategy>
+		<private-session-attributes>false</private-session-attributes>
+		<css-class-wrapper>test</css-class-wrapper>
+	</portlet>
+</liferay-portlet-app>
