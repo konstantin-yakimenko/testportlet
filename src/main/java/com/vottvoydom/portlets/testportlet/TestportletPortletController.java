@@ -1,6 +1,7 @@
 package com.vottvoydom.portlets.testportlet;
 
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import javax.portlet.RenderRequest;
@@ -12,6 +13,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.portlet.bind.annotation.RenderMapping;
+
+import com.liferay.portal.kernel.bean.BeanLocator;
+import com.liferay.portal.security.lang.DoPrivilegedFactory;
 
 
 @Controller("TestportletPortletApp")
@@ -36,12 +40,56 @@ public class TestportletPortletController
 	public String handleRenderRequest(RenderRequest request, RenderResponse response, Model model)
 	    throws MalformedURLException {
 		System.out.println("YakimKY --- test portlet");
-		ApplicationContext parentApplicationContext = _applicationContext.getParent();
-		System.out.println("YakimKY --- app context = " + parentApplicationContext);
+		System.out.println("YakimKY --- app context = " + _applicationContext);
+		ApplicationContext ac = _applicationContext.getParent();
+		System.out.println("YakimKY --- app parent context = " + ac);
 		System.out.println("---------------------------------------------------------");
-		System.out.println(Arrays.asList(parentApplicationContext.getBeanDefinitionNames()));
+		System.out.println(Arrays.asList(_applicationContext.getBeanDefinitionNames()));
+		System.out.println("--------------------------------------------------------- parent");
+		System.out.println(Arrays.asList(ac.getBeanDefinitionNames()));
 		System.out.println("---------------------------------------------------------");
-		model.addAttribute("portletResourceUrl", request.getContextPath());
+
+/*
+YakimKY ---- PortletBeanLocatorUtil setBeanLocator = model-manager-0.0.2.A-SNAPSHOT
+YakimKY ---- PortletBeanLocatorUtil setBeanLocator = rlt_offer_details
+YakimKY ---- PortletBeanLocatorUtil setBeanLocator = rlt_offer_table
+YakimKY ---- PortletBeanLocatorUtil setBeanLocator = testanotherportlet-0.0.2.A-SNAPSHOT
+YakimKY ---- PortletBeanLocatorUtil setBeanLocator = testportlet-0.0.2.A-SNAPSHOT
+ */
+		
+		Testbean testbean = (Testbean)_applicationContext.getBean(Testbean.class);
+		System.out.println("YakimKY --- founded str = " + testbean.getStr());
+		
+		BeanLocator locator = com.liferay.portal.kernel.bean.PortletBeanLocatorUtil.getBeanLocator("testanotherportlet-0.0.2.A-SNAPSHOT");
+		System.out.println("YakimKY --- locator = " + locator);
+
+		String[] arStr = locator.getNames();
+		System.out.println("YakimKY --- locator = " + (new ArrayList<String>(Arrays.asList(arStr))));
+	
+//		DoPrivilegedFactory dopf = (DoPrivilegedFactory)locator.locate("com.liferay.portal.security.lang.DoPrivilegedFactory");
+		
+		
+		
+		try {
+			Testbeana testbeana = (Testbeana) locator.locate("testbeananame");
+			System.out.println("YakimKY --- founded testbeana Str = " + testbeana.getStr());
+//			com.vottvoydom.portlets.testanotherportlet.Anotherbeana a1 = (Anotherbeana) locator.locate("anotherbeanaid");
+//			System.out.println("YakimKY --- founded Anotherbeana Str = " + a1.getStr());
+//			
+//			com.vottvoydom.portlets.testanotherportlet.Anotherbean a2 = (Anotherbean) locator.locate("anotherbeanid");
+//			System.out.println("YakimKY --- founded Anotherbean Str = " + a2.getStr());
+
+		} catch(Exception e) {
+			System.out.println("exception ---> " + e.getMessage());
+		}
+		
+/*
+ YakimKY --- locator = [com.liferay.portal.security.lang.DoPrivilegedFactory]
+ exception ---> org.springframework.beans.factory.NoSuchBeanDefinitionException: No bean named 'testbeananame' is defined
+ */
+		
+		
+		
 		return "TestportletViewPage";
 	}
 /*

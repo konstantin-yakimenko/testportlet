@@ -19,4 +19,6 @@
 		<property name="templateEngine" ref="templateEngine"></property>
 		<property name="order" value="1"></property>
 	</bean>
+	
+	<bean class="com.vottvoydom.portlets.testportlet.Testbean"></bean>
 </beans>
